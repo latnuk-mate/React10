@@ -1,0 +1,164 @@
+*{
+    box-sizing: border-box;
+}
+
+body{
+    margin: 0;
+    padding: 0;
+    font-family: system-ui, 'Open Sans', 'Helvetica Neue', sans-serif;
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+}
+
+#root .taskBox{
+    width: 400px;
+    height: auto;
+    padding: 10px;
+    margin-top: 30px;
+    background: darkgray;
+    border: 1px solid #000;
+    border-radius: 8px;
+
+}
+
+.taskBox .head-text{
+    text-align: center;
+    color: darkslategrey;
+    font-weight: 400;
+    margin-bottom: 15px;
+    font-size: 1.5rem;
+
+}
+
+.taskBox .input-area{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 10px;
+}
+
+.input-area .input-field{
+    width: 100%;
+    padding: 8px 10px;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 4px;
+}
+
+.input-area .input-field:focus{
+    outline: none;
+}
+.input-area button{
+    background: whitesmoke;
+    border: none;
+    border-radius: 8px;
+    width: 50%;
+    margin: auto;
+    cursor: pointer;
+    
+}
+.input-area .plus-btn{
+    width: 60px;
+}
+.input-area button:hover{
+    animation: wave .4s linear infinite;
+    transition: background .2s ease-in-out;
+}
+
+.taskBox .task-area{
+    margin: 12px 10px;
+    box-shadow: 3px 3px 4px #eee;
+    border: 2px solid #444;
+    border-radius: 10px;
+    padding: 4px;
+    overflow-y: auto;
+    height: 250px;
+}
+
+.task-area .task--card{
+    background: #444;
+    padding: 10px;
+    border-radius: 6px;
+    color: #fff;
+    font-size: 1.3rem;
+    position: relative;
+    border: 1px solid #000;
+    margin-bottom: 1px;
+
+}
+.task-area .empty--text{
+    text-align: center;   
+}
+
+.task--card .date-created{
+    font-size: 14px;
+    color: #eee;
+    position: absolute;
+    right: 2px;
+    bottom: 4px;
+}
+
+.task-area .task--card .close{
+    position: absolute;
+    right: 10px;
+    top: 0;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    font-size: 20px;
+    color: #fff;
+}
+
+.task--card .flex{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.task--card .navigators{
+    padding: 5px;
+}
+
+.flex .mark--task::before{
+    content: "";
+    width: 0.65em;
+    height: 0.65em;
+    transform: scale(0);
+    transition: 120ms transform ease-in-out;
+    box-shadow: inset 1em 1em #000;
+    transform-origin: bottom left;
+    clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+    font-size: 18px;
+
+}
+
+.flex .mark--task{
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: #fff;
+    margin: 0;
+    width: 18px;
+    height: 18px;
+    border: 0.15em solid currentColor;
+    border-radius: 0.25em;
+    display: grid;
+    place-content: center;
+}
+
+
+input[type="checkbox"]:checked::before {
+    transform: scale(1);
+  }
+
+
+
+@keyframes wave{
+    0%{
+        background-color: #eee;
+    }
+
+    100%{
+        background-color: #fff;
+    }
+}
