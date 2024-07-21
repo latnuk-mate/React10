@@ -1,8 +1,12 @@
-# React + Vite
+# Concept
+I will be building a git application interface for cheking users and repositories
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# To-Do
+* have to design a UI to display contents
+* use that api to fetch data, provide details
+* deploy it on netlify
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+
+# Reference
+Url link :- https://api.github.com/users/
