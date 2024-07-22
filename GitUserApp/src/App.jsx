@@ -1,13 +1,14 @@
 import Controls from "./Controls"
 import Repos from "./Repos"
 import Sidebar from "./Sidebar"
-import { useContext } from "react"
+import { useContext} from "react"
 import { Theme } from "./Context"
 import Spinner from './assets/spinner.gif'
 
 
 function App() {
   const {profile, repo, text} = useContext(Theme);
+
   return (
     <div className="m-4">
         <Controls />
@@ -34,4 +35,5 @@ function App() {
   )
 }
 
-export default App
+
+export default App;

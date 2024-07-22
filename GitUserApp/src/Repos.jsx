@@ -36,7 +36,7 @@ const {repo} = useContext(Theme);
             <div className="border p-3 rounded-md text-gray-600" key={repos.id}>
                 <h4 className="mb-2 font-semibold text-lg">{repos.name}</h4>
                 <p className="mb-2 font-sans">{repos.description}</p>
-                <a href={repos.html_url} className="underline font-bold">Visit Repository</a>
+                <a href={repos.html_url} className="underline font-bold" target="_blank">Visit Repository</a>
             <div className="flex justify-evenly items-center mt-3">
                 <h5 className="flex items-center gap-1">
                     <div className="rounded-full python w-[10px] h-[10px]" style={{"background-color": styledLanguage(repos.language)}}></div>
