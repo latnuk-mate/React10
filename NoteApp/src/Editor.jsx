@@ -20,7 +20,7 @@ function Editor({saveNote, note, updateNote}) {
   <div className="container bg-gray-100">
 
 <ReactMde
-        value={note?.body}
+        value={note}
         onChange={updateNote}
         selectedTab={selectedTab}
         onTabChange={setSelectedTab}
