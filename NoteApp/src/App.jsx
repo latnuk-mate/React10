@@ -39,7 +39,7 @@ function App() {
    * useEffect to saving data to the database.
    * use [text] as a dependency..
    * use cleanup for cancelling out any processing delay.
-   * if we hit a key before the delayed time, then it will cancel the timer and set it againg
+   * if we hit a key before the delayed time, then it will cancel the timer and set it again
    * for the new one..
   */
 
@@ -83,7 +83,7 @@ function App() {
   }
 
    return (
-    <main>
+    <main className='overflow-hidden'>
 
     { 
 
