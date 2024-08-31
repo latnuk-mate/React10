@@ -1,3 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap');
+/* importing custom fonts */
+
+
+.dancing--script{
+  font-family: "Dancing Script", cursive;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
 
 .gutter {
   background-color: #eee;
@@ -16,10 +25,8 @@
   background-color: #9ca3af;
   color: #000;
   padding: 8px 10px;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
   margin-bottom: 10px;
+  position: relative;
 
 }
 

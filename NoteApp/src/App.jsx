@@ -2,37 +2,31 @@ import Split from 'react-split'
 import Sidebar from './Sidebar'
 import Editor from './Editor'
 import './App.css'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useContext } from 'react'
 import { addDoc, onSnapshot, setDoc, doc, deleteDoc } from 'firebase/firestore'
 import { noteCollection, db} from '../firebase'
+import Home from './Home'
+import Dashboard from './Dashboard'
+import { Context } from './NoteContext'
 
 function App() {
-  const [text, setText] = useState("");
-  const [notes, setNotes] = useState([]);
-  const [currentId, setCurrentId] = useState(notes[0]?.id || "");
+  const [user, setUser] = useState(null);
+  const {setReady, ready} = useContext(Context);
+
+  // useEffect(()=>{
+  //   const unSub = onSnapshot(noteCollection , (snap)=>{
+  //    const notelist = snap.docs.map((doc)=>
+  //         ({id: doc.id , ...doc.data()})
+  //     );
+
+  //     setNotes(notelist);
+
+  //   }); 
+  //   return unSub;
+  // }, []);
 
 
-  useEffect(()=>{
-    const unSub = onSnapshot(noteCollection , (snap)=>{
-     const notelist = snap.docs.map((doc)=>
-          ({id: doc.id , ...doc.data()})
-      );
 
-      setNotes(notelist);
-
-    }); 
-    return unSub;
-  }, []);
-
-
-  const currentNote = notes.find(note => note.id === currentId ) || notes[0];
-
-
-  useEffect(function(){
-      if(currentNote){
-        setText(currentNote.body)
-      }
-  }, [currentNote]);
 
   /**
    * Debouncing Logic.
@@ -43,38 +37,22 @@ function App() {
    * for the new one..
   */
 
-  useEffect(()=>{
-       // after 3 sec it updates the database...
-       const timeOutId = setTimeout(async function(){
-        // if body text is not changed, we won't update it.
-        if(text !== currentNote.body){
-          const docRef = doc(db, "noteapp", currentId);
-          await setDoc(docRef, { body: text, lastUpdated: Date.now()}, { merge: true })
-        }
-      }, 3000);
+  // useEffect(()=>{
+  //      // after 3 sec it updates the database...
+  //      const timeOutId = setTimeout(async function(){
+  //       // if body text is not changed, we won't update it.
+  //       if(text !== currentNote.body){
+  //         const docRef = doc(db, "noteapp", currentId);
+  //         await setDoc(docRef, { body: text, lastUpdated: Date.now()}, { merge: true })
+  //       }
+  //     }, 3000);
 
-      return ()=> clearTimeout(timeOutId)
+  //     return ()=> clearTimeout(timeOutId)
 
-  }, [text])
+  // }, [text])
 
 
 
-  async function saveNote(){
-    const note = {
-      body: "#Create A Note",
-      createdAt: Date.now(),
-      lastUpdated: Date.now()
-    }
-
-    try {
-      const docRef = await addDoc(noteCollection, note);
-      console.log('document was written successfully with id => ', docRef.id);
-         setCurrentId(docRef.id);
-  } 
-  catch (error) {
-      console.error(error)
-  }  
-  }
 
 
   async function deleteNote(){
@@ -82,10 +60,24 @@ function App() {
     await deleteDoc(docRef);
   }
 
-   return (
-    <main className='overflow-hidden'>
+  
 
-    { 
+  if(!ready){
+    return <Home setUser={setUser} setReady={setReady}/>
+  }else{
+    return <Dashboard user={user} notes={notes} setReady={setReady}/>
+  }
+
+
+
+  //  return (
+
+
+  //   <main>
+    
+    
+
+    {/* { 
 
     (notes.length > 0) && (
        <Split 
@@ -108,9 +100,11 @@ function App() {
             <button className='bg-gray-700 px-4 py-2 rounded-md text-white text-lg' onClick={saveNote}>create one note</button>
         </div>
       )
-    }
+    } */}
   
-</main>
-)}
+// </main>
+// )
+
+}
 
 export default App
