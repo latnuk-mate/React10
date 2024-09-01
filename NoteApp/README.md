@@ -2,7 +2,7 @@
 <!-- Write what i learnt throughout this project. -->
 # What I Learn!
 In this project,  I learnt so many things in React, like some new concepts such as split wrapper in React and implement a markdown Editor. While building this project there were many major issues; for instance, creating/updating notes in the editor and display this in the sidebar, and other stuffs like integrating firebase (firestore) to save or render notes in real time.
-I used firebase firestore as my database to keep notes stored, Though, Firebase was completely new to me & was somewhat unintelligible to deal with the data. but I leant firebase firestore several functions like,
+I used firebase firestore as my database to keep notes stored, Though, Firebase was completely new to me & was somewhat unintelligible to deal with the data. but I learnt firebase firestore several functions like,
 create, read, update, delete data efficeiently.
 
 <!-- explain every little things like, modules, effects and clean up function their usecases. -->
@@ -31,7 +31,4 @@ prepare the editor & sidebar page; build a good looking UI
 clean up the APP.jsx part writing more reusable component.
 
 
-
-** TODOs **
-fix the notes array portion, adding all the documents and diplaying it to the sidebar.
- -->
+-->

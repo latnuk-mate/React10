@@ -55,17 +55,17 @@ function App() {
 
 
 
-  async function deleteNote(){
-    const docRef = doc(db, "noteapp", currentId);
-    await deleteDoc(docRef);
-  }
+  // async function deleteNote(){
+  //   const docRef = doc(db, "noteapp", currentId);
+  //   await deleteDoc(docRef);
+  // }
 
   
 
   if(!ready){
     return <Home setUser={setUser} setReady={setReady}/>
   }else{
-    return <Dashboard user={user} notes={notes} setReady={setReady}/>
+    return <Dashboard user={user}  setReady={setReady}/>
   }
 
 

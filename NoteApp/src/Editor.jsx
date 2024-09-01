@@ -13,15 +13,22 @@ const converter = new Showdown.Converter({
   });
 
 
-function Editor({saveNote, note, updateNote, setShowEditor}) {
+function Editor({saveNote, note, setText, setShowEditor, setTitle, title}) {
     const [selectedTab, setSelectedTab] = useState("write");
 
   return (
-  <div className="container bg-gray-100 mt-5 ">
-
+  <div className="container bg-gray-100 mt-4">
+    <div className="mb-2">
+      <input type="text" name="NoteTitle"
+       placeholder="Notes Title..."
+       value={title}
+       className="text-gray-600 w-full p-2 focus:outline-none focus:border-none rounded-sm"
+       onChange={(e)=> setTitle(e.target.value)}
+       />
+    </div>
 <ReactMde
         value={note}
-        onChange={updateNote}
+        onChange={setText}
         selectedTab={selectedTab}
         onTabChange={setSelectedTab}
         generateMarkdownPreview={markdown =>

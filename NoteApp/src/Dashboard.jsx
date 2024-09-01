@@ -4,41 +4,35 @@ import NoteSlide from './NoteSlide';
 import Action from './Action';
 import { useEffect, useState } from 'react';
 import Editor from './Editor';
-import { addDoc, doc, getDocs, setDoc  } from 'firebase/firestore';
+import { addDoc, deleteDoc, doc, onSnapshot, setDoc  } from 'firebase/firestore';
 
 
 function Dashboard({user, setReady}) {
-    const notelist = [];
     const [notes, setNotes] = useState([]);
     const [currentId, setCurrentId] = useState(notes[0]?.id || "");
     const [text, setText] = useState("");
     const [showEditor, setShowEditor] = useState(false);
+    const [title, setTitle] = useState("")
 
 
-useEffect(function(){
-        
-    async function fetchDocs() {
+  useEffect(()=>{
+    const unSub = onSnapshot(noteCollection , (snap)=>{
+     const notelist = snap.docs.map((doc)=>
+          ({id: doc.id , ...doc.data()})
+      );
 
-        try {
-            const snapData = await getDocs(noteCollection);
-            snapData.forEach((doc)=>{
-                notelist.push({id: doc.id , ...doc.data()});
-            })
-                setNotes(notelist);
-             } catch (err) {
-                console.log(err.message)
-            }   
-        }
+      setNotes(notelist);
 
-        fetchDocs();
-        
-    }, [])
+    }); 
+    return unSub;
+  }, []);
 
-    console.log(notes)
+    // console.log(notes)
     const currentNote = notes.find(note => note.id === currentId ) || notes[0];
 
     useEffect(function(){
         if(currentNote){
+          setTitle(currentNote.title)
           setText(currentNote.body)
         }
     }, [currentNote]);
@@ -57,7 +51,8 @@ useEffect(function(){
 
    async function createNote(){
         const noteFormat = {
-            body: "#Create A Note",
+            title: "",
+            body: "#Write Your First Note...",
             createdAt: Date.now(),
             lastUpdated: Date.now()
           }
@@ -75,13 +70,21 @@ useEffect(function(){
 
     async function saveNote(){
         try {
-            const docRef = doc(db, "noteapp", currentId);
-            await setDoc(docRef, { body: text, lastUpdated: Date.now()}, { merge: true });
-            setShowEditor(false)
+            if(text !== currentNote.body){
+                const docRef = doc(db, "noteapp", currentId);
+                await setDoc(docRef, {title: title, body: text, lastUpdated: Date.now()}, { merge: true });
+            }
+                setShowEditor(false)
         } catch (error) {
                 console.log(error.message)
         }
     }
+
+
+    async function deleteNote(id){
+        const docRef = doc(db, "noteapp", id);
+        await deleteDoc(docRef);
+      }
 
   return (
     <div className='mt-24 mx-auto block shadow-md bg-gray-100 w-full lg:w-2/3 px-10 py-3 pb-8'>
@@ -105,15 +108,21 @@ useEffect(function(){
         {showEditor && (
             <Editor
             note={text}
-            updateNote={setText}
+            setText={setText}
             setShowEditor={setShowEditor} 
             saveNote={saveNote}
+            title={title}
+            setTitle={setTitle}
             />
         )}
 
         {!showEditor && (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 mt-8 mb-6">
-        <NoteSlide />
+        <NoteSlide notes={notes}
+            deleteNote={deleteNote} 
+            setShowEditor={setShowEditor} 
+            setCurrentId={setCurrentId}
+        />
         <Action createNote={createNote} />
         </div> 
         )}
