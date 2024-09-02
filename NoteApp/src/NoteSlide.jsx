@@ -8,9 +8,9 @@ function UpdateNote(id){
 
 
   return (
-            <div className="col-span-2 shadow-sm p-3 border rounded-md">
-                <h5 className='text-center text-xl font-serif text-amber-500'>Your Notes</h5>
- <div className="mt-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">            
+    <div className="col-span-2 shadow-sm p-3 border rounded-md">
+        <h5 className='text-center text-xl font-serif text-amber-500'>Your Notes</h5>
+            <div className="mt-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">            
     {
         (notes.length > 0) && notes.map(note => (
             <div className="shadow-md border rounded-sm p-3">
@@ -30,8 +30,11 @@ function UpdateNote(id){
             </div>
 
             <h5 className='italic font-semibold mb-1'>{note.title}</h5>
-         <p className='text-gray-600 w-full whitespace-nowrap overflow-hidden text-ellipsis mb-3'>{note.body}</p>  
-            
+            <p className='text-gray-600 w-full whitespace-nowrap overflow-hidden text-ellipsis mb-1'>{note.body}</p>  
+            <div 
+                className="text-gray-300 mb-1 text-sm text-right">
+                    last write {new Date(note.lastUpdated).toLocaleDateString()}
+            </div>
             </div>
         ))
     }

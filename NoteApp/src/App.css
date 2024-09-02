@@ -8,29 +8,3 @@
   font-style: normal;
 }
 
-.gutter {
-  background-color: #eee;
-  background-repeat: no-repeat;
-  background-position: 50%;
-}
-
-
-.gutter.gutter-horizontal {
-  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAeCAYAAADkftS9AAAAIklEQVQoU2M4c+bMfxAGAgYYmwGrIIiDjrELjpo5aiZeMwF+yNnOs5KSvgAAAABJRU5ErkJggg==');
-  cursor: col-resize;
-}
-
-.sidebar--list li{
-  cursor: pointer;
-  background-color: #9ca3af;
-  color: #000;
-  padding: 8px 10px;
-  margin-bottom: 10px;
-  position: relative;
-
-}
-
-.sidebar--list li.activeList{
-  background-color: #0f172a;
-  color: #fff;
-}

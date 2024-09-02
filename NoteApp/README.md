@@ -26,9 +26,5 @@ as an example, I used OnSnapshot function from firestore which is a listener tha
 
 <!-- 
 finished writing the dashboard section, pick up some good color for the UI.
-learn firebase authentication for email & password and also check the data retrieval process and sign out process.
-prepare the editor & sidebar page; build a good looking UI
-clean up the APP.jsx part writing more reusable component.
-
 
 -->

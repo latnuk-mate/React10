@@ -1,9 +1,13 @@
-import { signInWithPopup } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { auth, provider } from "../firebase";
+import { useState } from "react";
 
 
 function Home({setUser, setReady}) {
+    const [Email, setEmail] = useState('');
+    const [Password, setPassword] = useState("");
 
+    // for sign up with google...
     function GoogleSign(){
         signInWithPopup(auth, provider)
         .then((result) => {
@@ -14,6 +18,33 @@ function Home({setUser, setReady}) {
             const errorMessage = error.message;
             console.log(errorMessage)
         });
+    }
+
+
+
+    // email & password sign up process...
+    
+    function signUpWithEmailAndPassword(email, password){
+        createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          setUser(userCredential.user);
+          setReady(true)
+        })
+        .catch((error) => {
+          console.log(error.message)
+        });
+    }
+
+
+    function SignInWithEmailAndPassword(email, password){
+        signInWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    setUser(userCredential.user);
+                    setReady(true)
+                })
+                .catch((error) => {
+                    console.log(error.message)
+                });
     }
 
 
@@ -52,24 +83,30 @@ className="flex items-center justify-center gap-3 mb-5 bg-transparent text-lg fo
 <p className="text-center text-gray-500 mb-4">Or, Continue With Email</p>
 
 <div className="email--login--area mb-4">
-<label htmlFor="userName">UserName</label>
+<label htmlFor="userName">Email</label>
     <input 
-    type="text" 
+    type="email" 
     className="w-full text-gray-600 border border-gray-400 px-5 py-2 mb-3 rounded-2xl"
-    placeholder="Your UserName"/>
+    value={Email}
+    onChange={(e) => setEmail(e.target.value)}
+    placeholder="Your Email"/>
 
 <label htmlFor="password">Password</label>
     <input 
-    type="text" 
+    type="password" 
     className="w-full text-gray-600 border border-gray-400 px-5 py-2 mb-4 rounded-2xl"
+    value={Password}
+    onChange={(e) => setPassword(e.target.value)}
     placeholder="Your Password"/>
 
     <button
+    onClick={()=> SignInWithEmailAndPassword(Email, Password)}
     className="w-full text-lg font-medium text-white bg-amber-400 px-5 py-2 mb-3 rounded-2xl">
         Sign In
     </button>
 
     <button
+    onClick={() => signUpWithEmailAndPassword(Email, Password)}
     className="w-full text-lg font-medium text-gray-700 bg-transparent px-5 py-2 mb-2 rounded-2xl border-2 border-gray-800">
         Create An Account
     </button>
