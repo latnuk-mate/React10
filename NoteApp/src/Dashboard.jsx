@@ -2,12 +2,15 @@ import { signOut } from 'firebase/auth'
 import { auth, db } from '../firebase'
 import NoteSlide from './NoteSlide';
 import Action from './Action';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import Editor from './Editor';
 import { addDoc, collection, deleteDoc, doc, onSnapshot, setDoc  } from 'firebase/firestore';
+import ErrorPage from './Loading';
+import { Navigate} from 'react-router-dom';
+import { NoteProvider } from './NoteContext';
 
 
-function Dashboard({user, setReady}) {
+function Dashboard() {
     let notesCollection;
     const [notes, setNotes] = useState([]);
     const [currentId, setCurrentId] = useState(notes[0]?.id || "");
@@ -15,42 +18,43 @@ function Dashboard({user, setReady}) {
     const [showEditor, setShowEditor] = useState(false);
     const [title, setTitle] = useState("")
 
-    // get the currentUser...
-       if(auth.currentUser){
-        let userId = auth.currentUser.uid;
-        notesCollection = collection(doc(db, 'users', userId), 'notes');
-      }
+    const {user} = useContext(NoteProvider)
+        let userId = user.uid;
+        notesCollection = collection(doc(db, 'users', userId), 'notes'); 
 
-    //   setting up a listener for data manipulation..
-  useEffect(()=>{
-    const unSub = onSnapshot(notesCollection , (snap)=>{
-     const notelist = snap.docs.map((doc)=>
-          ({id: doc.id , ...doc.data()})
-      );
+             //   setting up a listener for data manipulation..
+             useEffect(()=>{
+                const unSub = onSnapshot(notesCollection , (snap)=>{
+                const notelist = snap.docs.map((doc)=>
+                    ({id: doc.id , ...doc.data()})
+                );
 
-      setNotes(notelist);
+                setNotes(notelist);
 
-    }); 
-    return unSub;
-  }, []);
+                }); 
+                
+                return unSub;
+            }, []); 
+
+
 
 
 // getting the current selected note..
 const currentNote = notes.find(note => note.id === currentId ) || notes[0];
 
     useEffect(function(){
-        if(currentNote){
-          setTitle(currentNote.title)
-          setText(currentNote.body)
+            if(currentNote){
+                setTitle(currentNote.title)
+                setText(currentNote.body)
+            } 
         }
-    }, [currentNote]);
+    , [currentNote]);
 
 
 // logging out...
     function SignOutUser(){
         signOut(auth).then(()=>{
             alert('sign out successfully!');
-            setReady(false)
         }).catch(err => {
             console.log(err.message)
         })
@@ -94,48 +98,55 @@ const currentNote = notes.find(note => note.id === currentId ) || notes[0];
         await deleteDoc(docRef);
       }
 
+
+
   return (
-    <div className='mt-24 mx-auto block shadow-md bg-gray-100 w-full lg:w-2/3 px-10 py-3 pb-8'>
-            <div className="flex items-center justify-between md:px-10">
-                <h5 className='text-4xl dancing--script text-amber-600'>PenNotes</h5>
-                <div className="flex items-center gap-6">
-                    <h5 className='text-gray-600 text-lg hidden md:block'>{user.displayName}</h5>
-                            <img src={user.photoURL} alt="google user"
-                             width={30} height={30} className='rounded-full border border-gray-400'/> 
-                    <button title='Sign Out' onClick={SignOutUser}>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-box-arrow-up" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd" d="M3.5 6a.5.5 0 0 0-.5.5v8a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5v-8a.5.5 0 0 0-.5-.5h-2a.5.5 0 0 1 0-1h2A1.5 1.5 0 0 1 14 6.5v8a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 14.5v-8A1.5 1.5 0 0 1 3.5 5h2a.5.5 0 0 1 0 1z"/>
-                        <path fill-rule="evenodd" d="M7.646.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 1.707V10.5a.5.5 0 0 1-1 0V1.707L5.354 3.854a.5.5 0 1 1-.708-.708z"/>
-                    </svg>
-                 </button>
+  <div className='mt-24 mx-auto block shadow-md bg-gray-100 w-full lg:w-2/3 px-10 py-3 pb-8'>
+                <div className="flex items-center justify-between md:px-10">
+                    <h5 className='text-4xl dancing--script text-amber-600'>PenNotes</h5>
+                    <div className="flex items-center gap-6">
+                        <h5 className='text-gray-600 text-lg hidden md:block'>
+                            {user.displayName ? user.displayName : "New User"}
+                        </h5>
+                            <img 
+                                src={user.photoURL? user.photoURL : "/icon.svg" } alt="google user"
+                                 width={30} height={30} className='rounded-full border border-gray-400'/> 
+                        <button title='Sign Out' onClick={SignOutUser}>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" className="bi bi-box-arrow-up" viewBox="0 0 16 16">
+                            <path fillRule="evenodd" d="M3.5 6a.5.5 0 0 0-.5.5v8a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5v-8a.5.5 0 0 0-.5-.5h-2a.5.5 0 0 1 0-1h2A1.5 1.5 0 0 1 14 6.5v8a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 14.5v-8A1.5 1.5 0 0 1 3.5 5h2a.5.5 0 0 1 0 1z"/>
+                            <path fillRule="evenodd" d="M7.646.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 1.707V10.5a.5.5 0 0 1-1 0V1.707L5.354 3.854a.5.5 0 1 1-.708-.708z"/>
+                        </svg>
+                     </button>
+                    </div>
                 </div>
-            </div>
-
-        {/* menubar section is done! */}
-
-        {showEditor && (
-            <Editor
-            note={text}
-            setText={setText}
-            setShowEditor={setShowEditor} 
-            saveNote={saveNote}
-            title={title}
-            setTitle={setTitle}
+    
+            {/* menubar section is done! */}
+    
+            {showEditor && (
+                <Editor
+                note={text}
+                setText={setText}
+                setShowEditor={setShowEditor} 
+                saveNote={saveNote}
+                title={title}
+                setTitle={setTitle}
+                />
+            )}
+    
+            {!showEditor && (
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 mt-8 mb-6">
+            <NoteSlide notes={notes.sort((a, b) => b.lastUpdated - a.lastUpdated)}
+                deleteNote={deleteNote} 
+                setShowEditor={setShowEditor} 
+                setCurrentId={setCurrentId}
             />
-        )}
+            <Action createNote={createNote} />
+            </div> 
+            )}
+    
+        </div>
+    
 
-        {!showEditor && (
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 mt-8 mb-6">
-        <NoteSlide notes={notes.sort((a, b) => b.lastUpdated - a.lastUpdated)}
-            deleteNote={deleteNote} 
-            setShowEditor={setShowEditor} 
-            setCurrentId={setCurrentId}
-        />
-        <Action createNote={createNote} />
-        </div> 
-        )}
-
-</div>
   )
 }
 

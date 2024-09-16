@@ -1,21 +1,29 @@
 import './App.css'
-import {useState } from 'react'
-
 import Home from './Home'
 import Dashboard from './Dashboard'
+import { auth } from '../firebase';
+import EmailVerification from './EmailVerification';
+import {BrowserRouter as Router , Route, Routes} from 'react-router-dom';
+import PrivateRoute from './PrivateRoute';
+
 
 
 function App() {
-  const [user, setUser] = useState(null);
-  const [ready, setReady] = useState(false)
 
+return(
+       <Router>
+        <Routes>
+        <Route path='/' element={<Home/>}/>
+        <Route path="/dashboard" element={<PrivateRoute element={<Dashboard />}/> } />
+        <Route path='/verifyMail' element={<EmailVerification auth={auth}/> } />
+        </Routes>
+   
+  </Router> 
 
-  if(!ready){
-    return <Home setUser={setUser} setReady={setReady}/>
-  }else{
-    return <Dashboard user={user}  setReady={setReady}/>
-  }
+  )
+
 
 }
-
 export default App;
+
+

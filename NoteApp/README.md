@@ -26,5 +26,11 @@ as an example, I used OnSnapshot function from firestore which is a listener tha
 
 <!-- 
 finished writing the dashboard section, pick up some good color for the UI.
+fix the Ui for dasboard to set some custom placeholders for image and displayname!
 
 -->
+
+
+<!-- ** created route system for the app..
+fix the verification process..
+handled error by creating error pages... ** -->
