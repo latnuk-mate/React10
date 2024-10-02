@@ -8,12 +8,12 @@ function UpdateNote(id){
 
 
   return (
-    <div className="col-span-2 shadow-sm p-3 border rounded-md">
-        <h5 className='text-center text-xl font-serif text-amber-500'>Your Notes</h5>
-            <div className="mt-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">            
+    <div className="col-span-2 shadow-sm p-3 border rounded-md shadow-primary--color max-h-[350px] overflow-y-auto">
+        <h5 className='text-center text-xl font-serif text-primary--color'>Your Notes</h5>
+        <div className="mt-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">            
     {
-        (notes.length > 0) && notes.map(note => (
-            <div className="shadow-md border rounded-sm p-3" key={note.id}>
+        (notes.length > 0) && notes.map(note => (   
+            <div className="shadow-md border p-3 bg-primary--color rounded-md" key={note.id}>
                 <div className="flex items-center justify-end space-x-4 mb-2">
                     {/* two action buttons */}
                     <button className=" text-gray-500" onClick={() => UpdateNote(note.id)}>

@@ -14,10 +14,14 @@ function NoteContext({children}) {
 
     useEffect(function(){
        onAuthStateChanged(auth, (user)=>{
+        // Cheking if the user has verified email!
+        if(user?.emailVerified){
           console.log(user)
-            setUser(user)
-            setIsReady(false)
-
+          setUser(user)
+          setIsReady(false)
+        }else{
+           setIsReady(false)
+        }
         });
       
       }, []);
