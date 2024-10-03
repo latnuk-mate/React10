@@ -15,7 +15,7 @@ function Flash({onFlash, animateBorder, text, bgColor, textColor}) {
 </button>
        <div className="px-4 text-center font-medium text-lg">{text}</div>
         <div
-        className="border-2 border-gray-900 absolute bottom-0 rounded-lg transition-all"
+        className="border-2 absolute bottom-0 rounded-lg transition-all"
         style={{width: "100%"}}
         ref={animateBorder}>
         </div>

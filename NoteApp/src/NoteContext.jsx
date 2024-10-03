@@ -10,6 +10,7 @@ export const NoteProvider = createContext(null);
 function NoteContext({children}) {
     const [user, setUser] = useState(null);
     const [isReady, setIsReady] = useState(true);
+    const [flash, setFlash] = useState(false);
     
 
     useEffect(function(){
@@ -34,7 +35,7 @@ function NoteContext({children}) {
 
 
       return(
-        <NoteProvider.Provider value={{user, setUser}}>
+        <NoteProvider.Provider value={{user, setUser, flash, setFlash}}>
             {children}
         </NoteProvider.Provider>
       )

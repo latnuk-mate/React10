@@ -6,32 +6,33 @@ import {
     signInWithPopup
     } from "firebase/auth";
 import { auth, provider } from "../firebase";
-import {useContext, useRef, useState } from "react";
+import {useContext, useState } from "react";
 import Flash from "./Flash";
-import { Navigate } from "react-router-dom";
 import { NoteProvider } from "./NoteContext";
+import { Navigate } from "react-router-dom";
 
 
-function Home({}) {
+
+function Home({setText, setBgColor, setTextColor, text, textColor, animateBorder, bgColor}) {
     const [Email, setEmail] = useState('');
     const [Password, setPassword] = useState("");
-    const [flash, setFlash] = useState(false);
-    const [text, setText] = useState("");
-    const [bgColor, setBgColor] = useState('')
-    const [textColor, setTextColor] = useState("");
 
-    const animateBorder = useRef("");
-    let width = 100;
+    const {user, flash, setFlash} = useContext(NoteProvider);
 
-    const {user} = useContext(NoteProvider)
+    if(user){
+        return <Navigate to={'/dashboard'} replace={true} />
+    }
 
     // for sign up with google...
     function GoogleSign(){
         signInWithPopup(auth, provider)
         .then(() => {
-            alert('login successfull!')
+            setText("SignIn Successfully!")
+            setBgColor("#15B392")
+            setTextColor("#EAF6F6")
+            setFlash(true);
         }).catch(() => {
-            setText("Something error occured!")
+            setText("Something error occured! Please try later")
             setBgColor("#dc2626")
             setTextColor("#fafafa")
             setFlash(true);
@@ -46,7 +47,7 @@ function Home({}) {
                 const user = userCredential.user;
                 // check if the email is verified then proceed with the dashboard!
                 const actionCodeSetUp = {
-                    url: `${window.location.origin}/verifyMail`,
+                    url: `${window.location.origin}/auth/user`,
                     handleCodeInApp: true,
                   }
                 
@@ -59,6 +60,10 @@ function Home({}) {
                 })
                 .catch((error)=>{
                     console.error(error.message);
+                    setText("Something error occured! Please try later")
+                    setBgColor("#dc2626")
+                    setTextColor("#fafafa")
+                    setFlash(true);
                 })
             })
             .catch(err => {
@@ -74,7 +79,11 @@ function Home({}) {
     function SignInWithEmailAndPassword(email, password){
         signInWithEmailAndPassword(auth, email, password)
             .then(() => {
-                    alert('login successfull!')
+                setText("SignIn Successfully!")
+                setBgColor("#15B392")
+                setTextColor("#EAF6F6")
+                setFlash(true);
+                // alert('login successfully')
                 })
                 .catch(() => {
                     setText("Invalid Credentials!")
@@ -95,32 +104,13 @@ function PasswordReset(){
         setTextColor('#111827')
         setFlash(true);
     })
-    .catch(err => console.log(err.code))
-}
-
-
-
-
-function borderAnimation(){
-    const interval = setInterval(function(){
-        if(width > 0){
-            width = width - 1;
-            animateBorder.current.style.width = `${width}%`;
-        }else{
-            clearInterval(interval)
-            setFlash(false)  
-        }
-    }, 70);
-}
-
-
-if(flash){
-    borderAnimation();
-}
-
-
-if(user){
-    return <Navigate to={'/dashboard'} replace={true} />
+    .catch(err => {
+        console.log(err.code);
+        setText("Something error occured! Please try later")
+        setBgColor("#dc2626")
+        setTextColor("#fafafa")
+        setFlash(true);
+    })
 }
 
 

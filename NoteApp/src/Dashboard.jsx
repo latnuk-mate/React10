@@ -6,10 +6,11 @@ import { useContext, useEffect, useState } from 'react';
 import Editor from './Editor';
 import { addDoc, collection, deleteDoc, doc, onSnapshot, setDoc  } from 'firebase/firestore';
 import { NoteProvider } from './NoteContext';
+import Flash from './Flash';
 
 
 
-function Dashboard() {
+function Dashboard({setFlashText, setBgColor, setTextColor, flashText, textColor, animateBorder, bgColor}) {
     let notesCollection;
     const [notes, setNotes] = useState([]);
     const [currentId, setCurrentId] = useState(notes[0]?.id || "");
@@ -17,7 +18,9 @@ function Dashboard() {
     const [showEditor, setShowEditor] = useState(false);
     const [title, setTitle] = useState("")
 
-    const {user, setUser} = useContext(NoteProvider)
+    const {user, setUser, flash, setFlash} = useContext(NoteProvider);
+
+
         let userId = user.uid;
         notesCollection = collection(doc(db, 'users', userId), 'notes'); 
 
@@ -53,11 +56,15 @@ const currentNote = notes.find(note => note.id === currentId ) || notes[0];
 // logging out...
     function SignOutUser(){
         signOut(auth).then(()=>{
-            alert('sign out successfully!');
+            alert('Your are logged out!')
             setUser(null);
-            
+
         }).catch(err => {
-            console.log(err.message)
+            console.log(err.message);
+            setFlashText("Something error occured! Please try later")
+            setBgColor("#dc2626")
+            setTextColor("#fafafa")
+            setFlash(true);
         })
     }
 
@@ -72,12 +79,15 @@ const currentNote = notes.find(note => note.id === currentId ) || notes[0];
       
           try {
             const docRef = await addDoc(notesCollection, noteFormat);
-            console.log('document was written successfully with id => ', docRef.id);
                setCurrentId(docRef.id);
                setShowEditor(true)
         } 
         catch (error) {
-            console.error(error)
+            console.error(error);
+            setFlashText("Something error occured! Please try later")
+            setBgColor("#dc2626")
+            setTextColor("#fafafa")
+            setFlash(true);
         } 
     }
 
@@ -89,19 +99,42 @@ const currentNote = notes.find(note => note.id === currentId ) || notes[0];
             }
                 setShowEditor(false)
         } catch (error) {
-                console.log(error.message)
+                console.log(error.message);
+                setFlashText("Something error occured! Please try later")
+                setBgColor("#dc2626")
+                setTextColor("#fafafa")
+                setFlash(true);
         }
     }
 
 
     async function deleteNote(id){
-        const docRef = doc(notesCollection, id);
-        await deleteDoc(docRef);
+        try {
+            const docRef = doc(notesCollection, id);
+            await deleteDoc(docRef); 
+        } catch (error) {
+                console.error(error.code)
+                setFlashText("Something error occured! Please try later")
+                setBgColor("#dc2626")
+                setTextColor("#fafafa")
+                setFlash(true);
+        }
       }
 
-
-
   return (
+    <>
+         {
+        (flash) &&(
+            <Flash
+            onFlash={setFlash} 
+            animateBorder={animateBorder} 
+            text={flashText}
+            bgColor={bgColor}
+            textColor={textColor}
+            />
+        )
+    }
+    
   <div className='mt-24 mx-auto block shadow-sm shadow-primary--color w-full lg:w-2/3 px-10 py-3 pb-8'>
                 <div className="flex items-center justify-between md:px-10 text-primary--color">
                     <h5 className='text-4xl dancing--script text-secondary--color'>PenNotes</h5>
@@ -146,6 +179,7 @@ const currentNote = notes.find(note => note.id === currentId ) || notes[0];
             )}
     
         </div>
+        </>
     
 
   )

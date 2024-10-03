@@ -6,8 +6,6 @@ import { getAuth, GoogleAuthProvider } from "firebase/auth";
 const apiKey = import.meta.env.VITE_API_KEY;
 const appId = import.meta.env.VITE_APP_ID;
 
-
-
 const firebaseConfig = {
   apiKey: apiKey,
   authDomain: "noteapp-158df.firebaseapp.com",

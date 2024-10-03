@@ -31,30 +31,30 @@ function PasswordVerify({actionCode}) {
 
 
   return(
-    <div className="shadow-sm shadow-gray-600 p-5 rounded-xl w-1/3 mt-4 m-auto">
+    <div className="shadow-sm shadow-primary--color p-5 rounded-xl w-1/3 mt-4 m-auto">
       {
         updatePass ? (
-          <div>
+          <div className="text-primary--color">
           <h5 className="font-semibold text-xl text-gray-700 mb-3">Password changed!</h5>
-          <p className="text-gray-600 mb-5">You can now sign in with your new password</p>
-          <a href="/" className="decoration-none px-5 py-2 bg-blue-600 text-white rounded">Login</a>  
+          <p className="text-gray-600 mb-5 ">You can now sign in with your new password</p>
+          <a href="/" className="decoration-none px-5 py-2 bg-element--primary rounded">Login</a>  
           
          </div>
 
 ):
 (
   <div>
-  <h5 className="text-center text-gray-600 mb-10 text-xl font-serif">Reset Password</h5>
+  <h5 className="text-center text-primary--color mb-10 text-xl font-serif">Reset Password</h5>
   <div className="passwordField flex items-center gap-3 mb-5">
   <input
   ref={inputRef}
   type="password" 
-  className="border-b-2 border-gray-800 w-full focus:outline-none" 
+  className="border-b-2 border-element--third w-full focus:outline-none p-2" 
   placeholder="New Password"
   onChange={(e)=> setNewPass(e.target.value)}
   />
 
-<div onClick={setPassVisble}>
+<div onClick={setPassVisble} className="text-primary--color">
     {
       visible ? (
         <svg 
@@ -76,7 +76,7 @@ function PasswordVerify({actionCode}) {
 
 {/* save button */}
 <button onClick={resetPassword}
-className="px-4 py-1 bg-blue-600 text-white rounded-md text-lg">
+className="px-4 py-1 bg-element--primary text-primary--color rounded-md text-lg">
   Save
 </button>
 </div>
