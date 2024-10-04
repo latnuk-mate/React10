@@ -9,8 +9,7 @@ function Authentication() {
     const urlParams = new URLSearchParams(location.search);
     const actionCode = urlParams.get('oobCode');
     const mode = urlParams.get('mode');
-    console.log(mode)
-
+  
     if(mode === "verifyEmail"){
       return <EmailVerify actionCode={actionCode} />
 

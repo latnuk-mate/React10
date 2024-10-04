@@ -31,12 +31,12 @@ function PasswordVerify({actionCode}) {
 
 
   return(
-    <div className="shadow-sm shadow-primary--color p-5 rounded-xl w-1/3 mt-4 m-auto">
+    <div className="shadow-sm shadow-primary--color p-5 rounded-xl w-full md:w-1/2 lg:w-1/3 mt-4 m-auto">
       {
         updatePass ? (
           <div className="text-primary--color">
-          <h5 className="font-semibold text-xl text-gray-700 mb-3">Password changed!</h5>
-          <p className="text-gray-600 mb-5 ">You can now sign in with your new password</p>
+          <h5 className="font-semibold text-xl mb-3">Password changed!</h5>
+          <p className="mb-5 ">You can now sign in with your new password</p>
           <a href="/" className="decoration-none px-5 py-2 bg-element--primary rounded">Login</a>  
           
          </div>

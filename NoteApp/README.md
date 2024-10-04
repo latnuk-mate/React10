@@ -8,3 +8,6 @@
 
 # The app has been deployed on firebase
 check out the live app   https://noteapp-158df.web.app/
+
+
+<!-- finally done! -->

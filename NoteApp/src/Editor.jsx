@@ -17,12 +17,12 @@ function Editor({saveNote, note, setText, setShowEditor, setTitle, title}) {
     const [selectedTab, setSelectedTab] = useState("write");
 
   return (
-  <div className="container bg-gray-100 mt-4">
+  <div className="container mt-4 bg-element--third">
     <div className="mb-2">
       <input type="text" name="NoteTitle"
        placeholder="Notes Title..."
        value={title}
-       className="text-gray-600 w-full p-2 focus:outline-none focus:border-none rounded-sm"
+       className="text-element--primary w-full p-2 focus:outline-none focus:border-none rounded-sm"
        onChange={(e)=> setTitle(e.target.value)}
        />
     </div>
@@ -36,10 +36,10 @@ function Editor({saveNote, note, setText, setShowEditor, setTitle, title}) {
         }
         minEditorHeight={40}
         heightUnits="vh"
-        className=" text-gray-600"
+        className=""
       />
 
-    <div className="flex gap-5 items-center mt-4 justify-center">
+    <div className="flex gap-5 items-center mt-4 justify-center pb-3">
         <button onClick={()=> setShowEditor(false)}
                 className="px-5 py-2 bg-element--primary text-primary--color rounded-md text-lg">
           Back

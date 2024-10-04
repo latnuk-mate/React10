@@ -5,7 +5,7 @@ function Flash({onFlash, animateBorder, text, bgColor, textColor}) {
   return (
     <div className="flex justify-center items-center mt-5 mx-5 mb-3 md:mb-0 alert-box">
     <div 
-    className="rounded font-medium py-4 w-1/3 relative" 
+    className="rounded font-medium py-4 w-full md:w-1/2 lg:w-1/3 relative" 
     style={{backgroundColor: `${bgColor}`, color: `${textColor}`}}
     >
 <button className="absolute right-2 top-1 mb-1" onClick={() => onFlash(false)}>
