@@ -1,17 +1,17 @@
+import React from 'react';
 import { signOut } from 'firebase/auth'
 import { auth, db } from '../firebase'
 import NoteSlide from './NoteSlide';
 import Action from './Action';
 import { useContext, useEffect, useState } from 'react';
 import Editor from './Editor';
-import { addDoc, collection, deleteDoc, doc, onSnapshot, setDoc  } from 'firebase/firestore';
+import { addDoc, collection, deleteDoc, doc, getDoc, onSnapshot, setDoc  } from 'firebase/firestore';
 import { NoteProvider } from './NoteContext';
 import Flash from './Flash';
 
 
 
 function Dashboard({setFlashText, setBgColor, setTextColor, flashText, textColor, animateBorder, bgColor}) {
-    let notesCollection;
     const [notes, setNotes] = useState([]);
     const [currentId, setCurrentId] = useState(notes[0]?.id || "");
     const [text, setText] = useState("");
@@ -22,7 +22,7 @@ function Dashboard({setFlashText, setBgColor, setTextColor, flashText, textColor
 
 
         let userId = user.uid;
-        notesCollection = collection(doc(db, 'users', userId), 'notes'); 
+        const notesCollection = collection(doc(db, 'users', userId), 'notes'); 
 
              //   setting up a listener for data manipulation..
              useEffect(()=>{
@@ -143,8 +143,9 @@ const currentNote = notes.find(note => note.id === currentId ) || notes[0];
                             {user.displayName ? user.displayName : "New User"}
                         </h5>
                             <img 
-                                src={user.photoURL? user.photoURL : "/icon.svg" } alt="google user"
-                                 width={30} height={30} className='rounded-full border border-gray-400'/> 
+                                src={user.photoURL ? user.photoURL : "/icon.svg"} alt="google user"
+                                 width={30} height={30} className='rounded-full border border-gray-400'
+                            /> 
                         <button title='Sign Out' onClick={SignOutUser}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" className="bi bi-box-arrow-up" viewBox="0 0 16 16">
                             <path fillRule="evenodd" d="M3.5 6a.5.5 0 0 0-.5.5v8a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5v-8a.5.5 0 0 0-.5-.5h-2a.5.5 0 0 1 0-1h2A1.5 1.5 0 0 1 14 6.5v8a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 14.5v-8A1.5 1.5 0 0 1 3.5 5h2a.5.5 0 0 1 0 1z"/>
@@ -185,4 +186,4 @@ const currentNote = notes.find(note => note.id === currentId ) || notes[0];
   )
 }
 
-export default Dashboard;
+export default React.memo(Dashboard);

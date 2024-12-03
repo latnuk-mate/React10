@@ -14,4 +14,4 @@ A simple minimalistic react application, that provides User's data fetched from 
 Url link :- https://api.github.com/users/ -->
 
 
-
+The app is hosted here  https://gituserandrepo.netlify.app/

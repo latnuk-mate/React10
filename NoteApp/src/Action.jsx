@@ -1,5 +1,7 @@
+import React from "react";
 
 function Action({createNote}) {
+
   return (
     <div className='border p-4 text-center bg-primary--color rounded-md max-h-[250px]'>
     <h5 className='flex items-center gap-2 justify-center text-element--primary text-xl'>Write A Note
@@ -19,4 +21,4 @@ function Action({createNote}) {
   )
 }
 
-export default Action;
+export default React.memo(Action);

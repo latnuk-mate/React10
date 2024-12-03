@@ -1,10 +1,14 @@
+import React from "react";
+
 
 function NoteSlide({notes, deleteNote, setShowEditor, setCurrentId}) {
 
+// update the selected note
 function UpdateNote(id){
     setCurrentId(id);
     setShowEditor(true)
 }
+
 
 
   return (

@@ -1,3 +1,4 @@
+
 import { 
     createUserWithEmailAndPassword, 
     sendEmailVerification,
@@ -6,7 +7,7 @@ import {
     signInWithPopup
     } from "firebase/auth";
 import { auth, provider } from "../firebase";
-import {useContext, useState } from "react";
+import React, {useContext, useState } from "react";
 import Flash from "./Flash";
 import { NoteProvider } from "./NoteContext";
 import { Navigate } from "react-router-dom";
@@ -22,6 +23,8 @@ function Home({setText, setBgColor, setTextColor, text, textColor, animateBorder
     if(user){
         return <Navigate to={'/dashboard'} replace={true} />
     }
+
+
 
     // for sign up with google...
     function GoogleSign(){

@@ -1,7 +1,8 @@
-
+import React from "react";
 function Flash({onFlash, animateBorder, text, bgColor, textColor}) {
 
-  
+
+
   return (
     <div className="flex justify-center items-center mt-5 mx-5 mb-3 md:mb-0 alert-box">
     <div 

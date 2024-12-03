@@ -1,8 +1,7 @@
-
 import ReactMde from "react-mde";
 import Showdown from "showdown";
 import 'react-mde/lib/styles/css/react-mde-all.css';
-import { useState } from "react";
+import React, { useState } from "react";
 
 
 const converter = new Showdown.Converter({
@@ -11,6 +10,7 @@ const converter = new Showdown.Converter({
     strikethrough: true,
     tasklists: true
   });
+  
 
 
 function Editor({saveNote, note, setText, setShowEditor, setTitle, title}) {
@@ -55,4 +55,4 @@ function Editor({saveNote, note, setText, setShowEditor, setTitle, title}) {
   )
 }
 
-export default Editor
+export default Editor;

@@ -4,7 +4,7 @@ import Dashboard from './Dashboard'
 import {BrowserRouter as Router , Route, Routes} from 'react-router-dom';
 import PrivateRoute from './PrivateRoute';
 import Authentication from './Authentication';
-import { useContext, useRef, useState } from 'react';
+import React,{ useContext, useRef, useState } from 'react';
 import { NoteProvider } from './NoteContext';
 
 
@@ -78,6 +78,6 @@ return(
 
 
 }
-export default App;
+export default React.memo(App);
 
 
