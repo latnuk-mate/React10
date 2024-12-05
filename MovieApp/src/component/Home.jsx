@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import FilterMovie from "./FilterMovie"
 import Footer from "./Footer";
 import Hero from "./Hero"
@@ -39,8 +38,9 @@ export default function Home({api_key, setMovieData, searchMovie}){
     if(searchMovie){
         return(
             <>
-                <FavMovie />
-                <Footer />
+               <FavMovie searchMovie={searchMovie} likeAndSaveMovie={likeAndSaveMovie} />
+                <Footer /> 
+               
             </>
         )
     }else{

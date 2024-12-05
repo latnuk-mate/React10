@@ -18,6 +18,7 @@ function App() {
 
   useEffect(function(){
     localStorage.setItem('movie', JSON.stringify(moviedata || ""));
+    setFilterMovie(moviedata); // updating after saving...
 }, [moviedata])
 
 

@@ -17,6 +17,12 @@ useEffect(function(){
             setFilterMovie(movie);
         }
     }
+
+    if(location.pathname === '/'){
+        if(value === ''){
+            setSearchMovie(null);
+        }
+    }
 }, [value]);
 
 
@@ -57,7 +63,7 @@ function searchFavMovie(){
             <input 
             type="text" 
             className="outline-none bg-transparent w-full p-2" 
-            placeholder="Search favourite Movies..."
+            placeholder={location.pathname === '/' ? "Search favourite Movies..." : "Find Your Movies...."}
             value={value}
             onChange={(e) => setValue(e.target.value)}
             />
