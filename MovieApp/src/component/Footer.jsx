@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export default function Footer(){
     return(
         <div className="bg-zinc-900 text-zinc-50 pt-20 px-24 pb-12 mt-48">
@@ -21,7 +23,7 @@ export default function Footer(){
                 </div>
 
                 <div className="watchlist--area">
-                    <a href="/watch" className="btn">Go To Watchlist</a>
+                    <Link to={"/watch"} className="btn">Go To Watchlist</Link>
                 </div>
             </div>
 
