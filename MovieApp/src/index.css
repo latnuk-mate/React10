@@ -34,3 +34,11 @@
 .filter--box button.active{
     @apply border border-sky-500;
 }
+
+.favMovie{
+    @apply text-gray-200 cursor-pointer w-[22px] h-[22px];
+}
+
+.favMovie.active{
+    @apply fill-sky-400;
+}

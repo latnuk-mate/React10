@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react"
 import Moviecard from "./MovieCard";
+import Loading from "./Loading";
 
-export default function LatestMovie({api_key}){
+export default function LatestMovie({api_key, likeAndSaveMovie}){
     
     const [latestMovie, setLatestMovie] = useState(null);
 
@@ -20,11 +21,17 @@ export default function LatestMovie({api_key}){
         <div className="app_container" id="latest">
             <h5 className="headingText capitalize mb-4">Latest release</h5>
             <p className="capitalize subHeadingText">Checkout the latest released movies </p>
+
+                       {/* if not movie.. */}
+                {
+                    (!latestMovie)&& <Loading />
+                }
+
             <div className="flex items-center gap-4 overflow-x-auto MovieArea mt-5 mb-20">
                 {
                     latestMovie && latestMovie.map((movie, index) => (
                         <div className="flex-shrink-0 w-[18rem]" key={index}>
-                           <Moviecard movie={movie} index={index} /> 
+                           <Moviecard movie={movie} index={index} likeAndSaveMovie={likeAndSaveMovie}/> 
                         </div>
                         
                     ))

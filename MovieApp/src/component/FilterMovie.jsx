@@ -1,10 +1,12 @@
-import { useEffect, useRef, useState } from "react";
+import {useEffect, useRef, useState } from "react";
 import Moviecard from "./MovieCard";
+import Loading from "./Loading";
 
 function FilterMovie(
   {
     api_key,
-    getMovies
+    getMovies,
+    likeAndSaveMovie
 
   }
 ) {
@@ -66,25 +68,39 @@ function FilterMovie(
 
         {/* dynamic rendering... */}
 
+                {/* if not movie... */}
+                {
+                    (link === 'Popular' && !popular)&& <Loading />
+                }
+
+                {
+                    (link === 'Top Rated' && !topRated)&& <Loading />
+                }
+
+                {
+                    (link === 'Trending' && !trending)&& <Loading />
+                }
+
           <div className="grid mt-10 grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8 p-3 lg:p-0">
+
           {
             (link === 'Popular') && popular && popular.map((movie, index) => (
-                <Moviecard movie={movie} index={index}/>
+                <Moviecard movie={movie} index={index} likeAndSaveMovie={likeAndSaveMovie}/>
             ))
           }
 
           {
             (link === 'Top Rated') && topRated && topRated.map((movie, index) => (
-              <Moviecard movie={movie} index={index}/>
+              <Moviecard movie={movie} index={index} likeAndSaveMovie={likeAndSaveMovie}/>
             ))
           }
 
           {
             (link === 'Trending') && trending && trending.map((movie, index) => (
-              <Moviecard movie={movie} index={index}/>
+              <Moviecard movie={movie} index={index} likeAndSaveMovie={likeAndSaveMovie}/>
             ))
           }
-          </div>
+        </div>
 
     </div>
   )
