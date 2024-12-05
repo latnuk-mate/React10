@@ -11,7 +11,7 @@ In this Project, I have used TMDB api, which is very rich for getting real time 
     This api gives us the latest popular movies.
 
 2) https://api.themoviedb.org/3/trending/movie/week?api_key=api_key&language=en-US;
-    This endpoint gives us the treding shows or movies.
+    This endpoint gives us the trending shows or movies.
 
 3) https://api.themoviedb.org/3/movie/${type}?api_key=api_key&language=en-US&page=page;
     This particular endpoint fetches data based on type upcoming show or movies / popular series.
