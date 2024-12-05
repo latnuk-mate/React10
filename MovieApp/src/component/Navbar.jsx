@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
 
 
 export default function Navbar({moviedata, filterMovie, setFilterMovie, setSearchMovie, api_key}){
@@ -45,10 +45,10 @@ function searchFavMovie(){
                 <div>
                 <ul className="nav_menu flex items-center gap-3 md:gap-16 list-none text-lg text-gray-100">
                     <li className="">
-                        <a href="/" className={location.pathname === "/" ? 'active' : ""}>Home</a>
+                        <Link to={"/"} className={location.pathname === "/" ? 'active' : ""}>Home</Link>
                     </li>
                     <li className="">
-                        <a href="/watch" className={location.pathname === "/watch" ? 'active' : ""}>WatchList</a>
+                        <Link to={"/watch"} className={location.pathname === "/watch" ? 'active' : ""}>WatchList</Link>
                     </li>
                 </ul>
                 </div>
